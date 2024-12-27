@@ -1,0 +1,23 @@
+{
+    "name": "rootdev/student-portal-ai",
+    "type": "project",
+    "license": "MIT",
+    "developer": "Rens Belga Acuña",
+    "projects": "student portal AI powered",
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rens Acuña",
+            "email": "wasieacuna@example.com"
+        }
+    ],
+    "description": "This is a simple project for demonstration purposes.",
+    "minimum-stability": "stable"
+}
