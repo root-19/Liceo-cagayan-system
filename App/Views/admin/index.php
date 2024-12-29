@@ -14,15 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<?php include_once "./layout/sidebar.php";?>
 <body class="bg-gray-100 flex justify-center items-center h-screen">
     <div class="bg-white p-6 rounded shadow-md w-full max-w-md text-center">
         <h1 class="text-2xl font-bold mb-4">Welcome to the admin Dashboard!</h1>
@@ -35,5 +27,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             </button>
         </form>
     </div>
-</body>
-</html>
+

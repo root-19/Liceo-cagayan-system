@@ -2,3 +2,10 @@
     --maroon:#850d16;
     --yellow:#f1a60b ;
 }
+
+ .block:hover{
+    background-color: var(--yellow);
+}
+.logo{
+    width: 150px;
+}
