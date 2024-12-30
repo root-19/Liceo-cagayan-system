@@ -27,9 +27,9 @@
       </button>
     </div>
     <nav class="mt-6">
-      <a href="#" class="block px-4 py-2 text-gray-300  hover:text-white">Documents</a>
+      <a href="documents.php" class="block px-4 py-2 text-gray-300  hover:text-white">Documents</a>
       <a href="#" class="block px-4 py-2 text-gray-300 hover:text-white">Notification</a>
-      <a href="#" class="block px-4 py-2 text-gray-300  hover:text-white">Profile</a>
+      <a href="profile.php" class="block px-4 py-2 text-gray-300  hover:text-white">Profile</a>
       <a href="message.php" class="block px-4 py-2 text-gray-300  hover:text-white">Message</a>
       <a href="#" id="logout" class="block px-4 py-2 text-gray-300  hover:text-white">Logout</a>
 

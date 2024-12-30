@@ -75,7 +75,7 @@ $messages = $messageController->fetchMessages($_SESSION['user_id']);
         <!-- Message container (scrollable) -->
         <div id="messages" class="flex-grow p-4 h-96 overflow-y-scroll">
             <?php foreach ($messages as $message): ?>
-                <div class="message p-2 my-2 rounded-lg <?= $message['sender'] === 'admin' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black' ?>">
+                <div class="message p-2 my-2 rounded-lg <?= $message['sender'] === 'admin' ? 'bg-gray-200 text-black' : 'bg-amber-700 text-white' ?>">
                     <p><?= htmlspecialchars($message['message']) ?></p>
                     <?php if (isset($message['reply_message']) && $message['reply_message']): ?>
                         <div class="ml-4 text-sm text-gray-600 italic">
@@ -89,7 +89,7 @@ $messages = $messageController->fetchMessages($_SESSION['user_id']);
         <!-- Message input form -->
         <form method="POST" class="p-4 border-t flex">
             <input type="text" name="message" id="messageInput" placeholder="Type a message..." class="flex-grow border rounded p-2">
-            <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded">Send</button>
+            <button type="submit" style="background-color: var(--maroon);" class="ml-2 text-white px-4 py-2 rounded">Send</button>
         </form>
     </div>
 </body>

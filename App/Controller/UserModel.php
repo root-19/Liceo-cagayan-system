@@ -77,5 +77,47 @@ class UserModel {
         }
         return false;  // Return false if no user found or password mismatch
     }
+
+   
+    public function getUsersByRole($role) {
+        // Prepare the SQL query
+        $query = "SELECT school_id, name, surname, email FROM " . $this->accounts . " WHERE role = :role";
+        $stmt = $this->conn->prepare($query);
+
+        // Bind the role parameter
+        $stmt->bindParam(':role', $role);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch and return the result
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Fetch users with role and search term (optional)
+    public function getUsersByRoleAndSearch($role, $searchTerm = '') {
+        $query = "SELECT school_id, name, surname, email FROM " . $this->accounts . " WHERE role = :role";
+        
+        // Add search filter if a search term is provided
+        if (!empty($searchTerm)) {
+            $query .= " AND school_id LIKE :searchTerm";
+        }
+
+        $stmt = $this->conn->prepare($query);
+
+        // Bind parameters
+        $stmt->bindParam(':role', $role);
+
+        if (!empty($searchTerm)) {
+            $searchTerm = "%" . $searchTerm . "%";
+            $stmt->bindParam(':searchTerm', $searchTerm);
+        }
+
+        // Execute query
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 }
 ?>

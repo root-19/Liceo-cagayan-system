@@ -3,7 +3,7 @@
     --yellow:#f1a60b ;
 }
 
- .block:hover{
+ #block:hover{
     background-color: var(--yellow);
 }
 .logo{
