@@ -118,6 +118,28 @@ class UserModel {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
+
+    // Check if email exists in the users table
+    public function checkEmailExists($email) {
+        $stmt = $this->conn->prepare("SELECT * FROM " . $this->accounts . " WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        
+        return $stmt->rowCount() > 0;
+    }
+
+    // Update password
+    public function updatePassword($email, $new_password) {
+        $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
+        $query = "UPDATE " . $this->accounts . " SET password = :password WHERE email = :email";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':email', $email);
+
+        return $stmt->execute();
+    }
 }
+    
+
 ?>
