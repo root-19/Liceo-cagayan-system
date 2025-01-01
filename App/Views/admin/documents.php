@@ -124,88 +124,127 @@ try {
             </div>
         </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
     <script>
-    function showDocuments(studentId, studentName) {
-        // Display the modal
-        const modal = document.getElementById('documentModal');
-        modal.classList.remove('hidden');
+function showDocuments(studentId, studentName) {
+    // Display the modal
+    const modal = document.getElementById('documentModal');
+    modal.classList.remove('hidden');
 
-        // Set student name
-        document.getElementById('studentName').textContent = `Documents for ${studentName}`;
+    // Set student name
+    document.getElementById('studentName').textContent = `Documents for ${studentName}`;
 
-        // Fetch documents
-        fetch(`/Model/StudentDocs.php?user_id=${studentId}`)
-            .then(response => response.json())
-            .then(data => {
-                const container = document.getElementById('documentsContainer');
-                container.innerHTML = ''; // Clear previous documents
+    // Fetch documents
+    fetch(`/Model/StudentDocs.php?user_id=${studentId}`)
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('documentsContainer');
+            container.innerHTML = ''; // Clear previous documents
 
-                if (data.length > 0) {
-                    data.forEach(doc => {
-                        const docElement = `
-                            <div class="border p-4 rounded-lg bg-gray-100">
-                                <p class="font-medium">Type: ${doc.document_type}</p>
-                                <p class="text-sm text-gray-500">Uploaded on: ${doc.upload_date}</p>
-                                <img 
-                                    src="/uploads/${doc.file_path}" 
-                                    alt="Document Image" 
-                                    class="mt-2 max-w-[80px] max-h-[80px] rounded-lg shadow-lg cursor-pointer"
-                                    onclick="viewImage('/uploads/${doc.file_path}')">
-                                <button 
-                                    class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                                    onclick="approveDocument(${doc.id}, this)">
-                                    Approve
-                                </button>
-                            </div>
-                        `;
-                        container.innerHTML += docElement;
-                    });
-                } else {
-                    container.innerHTML = '<p class="text-gray-500">No documents uploaded by this student.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching documents:', error);
-                document.getElementById('documentsContainer').innerHTML = '<p class="text-red-500">Error loading documents.</p>';
-            });
-    }
+            if (data.length > 0) {
+                data.forEach(doc => {
+                    const isApproved = doc.status === 'Approved'; // Check if the document is approved
+                    const docElement = `
+    <div class="border border-gray-300 shadow-lg rounded-lg bg-white p-6 flex flex-col items-center space-y-4 hover:shadow-xl transition-all duration-300">
+        <p class="font-semibold text-lg text-gray-800">Type: ${doc.document_type}</p>
+        <p class="text-sm text-gray-600">Uploaded on: ${doc.upload_date}</p>
 
-    function closeModal() {
-        const modal = document.getElementById('documentModal');
-        modal.classList.add('hidden'); // Add the 'hidden' class to hide the modal
-    }
+        <!-- Image section with hover effect -->
+        <div class="relative w-full max-w-[150px] max-h-[150px] overflow-hidden rounded-lg shadow-md hover:scale-105 transition-transform">
+            <img 
+                src="/uploads/${doc.file_path}" 
+                alt="Document Image" 
+                class="w-full h-full object-cover rounded-lg cursor-pointer"
+                onclick="viewImage('/uploads/${doc.file_path}')">
+        </div>
 
-    
-    
-    function approveDocument(documentType, userId, button) {
-    console.log("Approving document with Type:", documentType, "for User ID:", userId);
+        <!-- Button section with improved styling -->
+        <button 
+            class="mt-2 w-full py-3 rounded-md text-white ${isApproved ? 'bg-gray-400 cursor-not-allowed' : 'bg-amber-900  focus:outline-none focus:ring-2 focus:ring-green-400'}"
+            onclick="${isApproved ? '' : `approveDocument(${doc.id}, this)`}" 
+            ${isApproved ? 'disabled' : ''}>
+            ${isApproved ? 'Approved' : 'Approve'}
+        </button>
+    </div>
+`;
+                    container.innerHTML += docElement;
+                });
+            } else {
+                container.innerHTML = '<p class="text-gray-500">No documents uploaded by this student.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching documents:', error);
+            document.getElementById('documentsContainer').innerHTML = '<p class="text-red-500">Error loading documents.</p>';
+        });
+}
+
+function approveDocument(documentId, button) {
+    console.log("Document ID:", documentId); // Log the ID to the console for debugging
 
     fetch('/Model/AproveDocument.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `document_type=${encodeURIComponent(documentType)}&user_id=${encodeURIComponent(userId)}`,
+        body: `id=${documentId}`, // Send the `id` to the backend
     })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Document approved successfully.');
-                button.textContent = 'Approved';
-                button.classList.add('bg-gray-400', 'cursor-not-allowed');
-                button.disabled = true; // Disable button after approval
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Document approved successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    button.textContent = 'Approved';
+                    button.classList.add('bg-gray-400', 'cursor-not-allowed');
+                    button.classList.remove('bg-green-500', 'hover:bg-green-600');
+                    button.disabled = true; // Disable button after approval
+                });
             } else {
-                alert('Error approving document: ' + data.message);
+                Swal.fire({
+                    title: 'Error!',
+                    text: `Error approving document: ${data.message}`,
+                    icon: 'error',
+                    confirmButtonText: 'Try Again'
+                });
             }
         })
         .catch(error => {
             console.error('Error approving document:', error);
-            alert('An unexpected error occurred.');
+            Swal.fire({
+                title: 'Unexpected Error',
+                text: 'An unexpected error occurred. Please try again later.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         });
 }
 
-    </script>
+function viewImage(imagePath) {
+    Swal.fire({
+        imageUrl: imagePath,
+        imageAlt: 'Document Image',
+        showCloseButton: true,
+        showConfirmButton: false
+    });
+}
+
+function closeModal() {
+    const modal = document.getElementById('documentModal');
+    modal.classList.add('hidden'); // Add the 'hidden' class to hide the modal
+
+    Swal.fire({
+        title: 'Closed!',
+        text: 'Document modal closed successfully.',
+        icon: 'info',
+        confirmButtonText: 'OK'
+    });
+}
+</script>
 
 </body>
 </html>
