@@ -9,6 +9,12 @@ class UserModel {
     }
   
     public function register($name, $middle_initial, $gender,  $school_id, $surname, $date_of_birth, $grade, $section, $strand, $phone_number, $email, $password, $role) {
+        
+        // Validate if email ends with '@edu.ph'
+    if (!str_ends_with($email, '@edu.ph')) {
+        return false; // Fail registration if email is invalid
+    }
+
         // Check if the email already exists
         $query = "SELECT * FROM " . $this->accounts . " WHERE email = :email";
         $stmt = $this->conn->prepare($query);
@@ -122,6 +128,12 @@ class UserModel {
 
     // Check if email exists in the users table
     public function checkEmailExists($email) {
+
+        if (!preg_match('/@edu\.ph$/', $email)) {
+            return false;
+        }
+
+    // prepare the query
         $stmt = $this->conn->prepare("SELECT * FROM " . $this->accounts . " WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
@@ -129,7 +141,7 @@ class UserModel {
         return $stmt->rowCount() > 0;
     }
 
-    // Update password
+    // update the password sana all INA UPDATE
     public function updatePassword($email, $new_password) {
         $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
         $query = "UPDATE " . $this->accounts . " SET password = :password WHERE email = :email";
