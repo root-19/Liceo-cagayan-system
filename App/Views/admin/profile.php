@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         'school_id' => $_POST['school_id'],
         'surname' => $_POST['surname'],
         'date_of_birth' => $_POST['date_of_birth'],
-        'grade' => $_POST['grade'],
-        'section' => $_POST['section'],
-        'strand' => $_POST['strand'],
+        // 'grade' => $_POST['grade'],
+        // 'section' => $_POST['section'],
+        // 'strand' => $_POST['strand'],
         'phone_number' => $_POST['phone_number'],
         'email' => $_POST['email'],
     ];
@@ -85,9 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
                 <p><strong>School ID:</strong> <?= htmlspecialchars($userProfile['school_id'] ?? 'N/A') ?></p>
                 <p><strong>Surname:</strong> <?= htmlspecialchars($userProfile['surname'] ?? 'N/A') ?></p>
                 <p><strong>Date of Birth:</strong> <?= htmlspecialchars($userProfile['date_of_birth'] ?? 'N/A') ?></p>
-                <p><strong>Grade:</strong> <?= htmlspecialchars($userProfile['grade'] ?? 'N/A') ?></p>
+                <!-- <p><strong>Grade:</strong> <?= htmlspecialchars($userProfile['grade'] ?? 'N/A') ?></p>
                 <p><strong>Section:</strong> <?= htmlspecialchars($userProfile['section'] ?? 'N/A') ?></p>
-                <p><strong>Strand:</strong> <?= htmlspecialchars($userProfile['strand'] ?? 'N/A') ?></p>
+                <p><strong>Strand:</strong> <?= htmlspecialchars($userProfile['strand'] ?? 'N/A') ?></p> -->
                 <p><strong>Phone Number:</strong> <?= htmlspecialchars($userProfile['phone_number'] ?? 'N/A') ?></p>
             </div>
             <button 
@@ -106,9 +106,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
             <input type="text" name="school_id" placeholder="School ID" value="<?= htmlspecialchars($userProfile['school_id'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2">
             <input type="text" name="surname" placeholder="Surname" value="<?= htmlspecialchars($userProfile['surname'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2">
             <input type="date" name="date_of_birth" value="<?= htmlspecialchars($userProfile['date_of_birth'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2">
-            <input type="text" name="grade" placeholder="Grade" value="<?= htmlspecialchars($userProfile['grade'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2">
-            <input type="text" name="section" placeholder="Section" value="<?= htmlspecialchars($userProfile['section'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2">
-            <input type="text" name="strand" placeholder="Strand" value="<?= htmlspecialchars($userProfile['strand'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2">
+            <!-- <input type="text" name="grade" placeholder="Grade" value="<?= htmlspecialchars($userProfile['grade'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2"> -->
+            <!-- <input type="text" name="section" placeholder="Section" value="<?= htmlspecialchars($userProfile['section'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2">
+            <input type="text" name="strand" placeholder="Strand" value="<?= htmlspecialchars($userProfile['strand'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2"> -->
             <input type="text" name="phone_number" placeholder="Phone Number" value="<?= htmlspecialchars($userProfile['phone_number'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2">
             <input type="email" name="email" placeholder="Email" value="<?= htmlspecialchars($userProfile['email'] ?? '') ?>" class="block w-full border-gray-300 rounded p-2">
             <button 

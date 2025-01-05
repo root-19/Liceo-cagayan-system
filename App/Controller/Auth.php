@@ -38,6 +38,7 @@ class Auth {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_role'] = $user['role'];
             $_SESSION['user_name'] = $user['name'];
+            // $_SESSION['user_surname'] = $user['surname'];
 
             // Role-based redirection
             if ($user['role'] === 'admin') {

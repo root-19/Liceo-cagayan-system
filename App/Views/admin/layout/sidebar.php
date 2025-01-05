@@ -28,10 +28,12 @@
       </button>
     </div>
     <nav class="mt-6">
+    <a href="index.php" class="block px-4 py-2 text-gray-300  hover:text-white">Home</a>
       <a href="Student.php" class="block px-4 py-2 text-gray-300  hover:text-white">Search student</a>
       <a href="Message.php" class="block px-4 py-2 text-gray-300 hover:text-white">Message</a>
       <a href="profile.php" class="block px-4 py-2 text-gray-300  hover:text-white">Profile managament</a>
-      <a href="#" class="block px-4 py-2 text-gray-300  hover:text-white">Notifications</a>
+      <a href="create_request.php" class="block px-4 py-2 text-gray-300  hover:text-white">Request documents</a>
+      <a href="" class="block px-4 py-2 text-gray-300  hover:text-white">Notifications</a>
       <a href="documents.php" class="block px-4 py-2 text-gray-300  hover:text-white">Documents
       <a href="#" id="logout" class="block px-4 py-2 text-gray-300  hover:text-white">Logout</a>
     </nav>
@@ -75,7 +77,7 @@
       text: "You are about to log out.",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
+      confirmButtonColor: '#991b1b',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, log out!'
     }).then((result) => {
