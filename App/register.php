@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
                 </div>
                 <div>
                     <input type="email"
-                    pattern="[a-zA-z0-9/._$+-]+@edu.\.ph"
+                    pattern="[a-zA-z0-9/._$+-]+@liceo.edu..\.ph"
                      name="email"
                       placeholder="Email" 
                     required

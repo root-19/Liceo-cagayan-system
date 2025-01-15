@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Three.js Globe</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+  <script>
+    // Scene, Camera, Renderer
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Globe (Sphere)
+    const geometry = new THREE.SphereGeometry(1, 32, 32);
+    const textureLoader = new THREE.TextureLoader();
+    const earthTexture = textureLoader.load(
+      'https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg',
+      () => renderer.render(scene, camera), // Callback to render after loading
+      undefined, // onProgress
+      (error) => console.error('Error loading texture:', error)
+    );
+    const material = new THREE.MeshBasicMaterial({ map: earthTexture });
+    const globe = new THREE.Mesh(geometry, material);
+    scene.add(globe);
+
+    // Camera position
+    camera.position.z = 3;
+
+    // Animation
+    function animate() {
+      requestAnimationFrame(animate);
+      globe.rotation.y += 0.01; // Rotate the globe
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>

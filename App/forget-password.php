@@ -1,13 +1,28 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
+
+require __DIR__ . '/vendor/autoload.php';
+
 $error = '';
 $success = '';
-$showNewPasswordForm = false;
+
+// Load environment variables
+$dotenv = Dotenv::createImmutable(__DIR__ . '/');
+$dotenv->load();
+
+// Generate a random password
+function generateRandomPassword() {
+    return substr(bin2hex(random_bytes(6)), 0, 12);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
     $email = $_POST['email'];
 
-    // Database connection (replace with your actual database connection)
-    require_once './Database/Database.php'; // or include your database connection file
+    // Database connection
+    require_once './Database/Database.php';
     require_once './Controller/UserModel.php';
 
     $db = new Database();
@@ -16,28 +31,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
 
     // Check if email exists in the database
     if ($userModel->checkEmailExists($email)) {
-        // Email exists, show the form to reset password
-        $showNewPasswordForm = true;
-        $emailToUpdate = $email; // Store email to use later for updating the password
-    } else {
-        $error = "Email not found.";
-    }
-}
+        // Generate a new password
+        $new_password = generateRandomPassword();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password'], $_POST['confirm_password'], $emailToUpdate)) {
-    $new_password = $_POST['new_password'];
-    $confirm_password = $_POST['confirm_password'];
+        // Hash the new password
+        $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
 
-    // Validate passwords
-    if ($new_password === $confirm_password) {
         // Update password in the database
-        if ($userModel->updatePassword($emailToUpdate, $new_password)) {
-            $success = "Password updated successfully!";
+        if ($userModel->updatePassword($email, $hashed_password)) {
+            // Send email with the new password
+            $mail = new PHPMailer(true);
+
+            try {
+                // SMTP server configuration using environment variables
+                $mail->isSMTP();
+                $mail->Host = $_ENV['SMTP_HOST'];
+                $mail->SMTPAuth = true;
+                $mail->Username = $_ENV['SMTP_USERNAME'];
+                $mail->Password = $_ENV['SMTP_PASSWORD'];
+                $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
+                $mail->Port = $_ENV['SMTP_PORT'];
+
+                // Sender and recipient settings
+                $mail->setFrom($_ENV['SMTP_USERNAME'], 'Liceo de Cagayan University');
+                $mail->addAddress($email);
+
+                // Email content
+                $mail->isHTML(true);
+                $mail->Subject = 'Password Reset';
+                $mail->Body = "Hello,<br><br>Your new password is: <strong>{$new_password}</strong><br><br>Please log in and change it for security purposes.";
+
+                $mail->send();
+                $success = "A new password has been sent to your email address.";
+            } catch (Exception $e) {
+                $error = "Error sending email: {$mail->ErrorInfo}";
+            }
         } else {
-            $error = "Error updating password.";
+            $error = "Error updating password in the database.";
         }
     } else {
-        $error = "Passwords do not match.";
+        $error = "Email not found.";
     }
 }
 ?>
@@ -62,30 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password'], $_POS
             <div class="bg-green-200 p-2 text-green-600 text-center rounded mb-4"><?php echo $success; ?></div>
         <?php endif; ?>
 
-        <!-- First Step: Email verification -->
-        <?php if (!$showNewPasswordForm): ?>
-            <form method="POST" class="space-y-4">
-                <div>
-                    <input type="email" name="email" placeholder="Enter your email" required class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <button type="submit" class="w-full text-white py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" style="background-color:var(--maroon)">Check Account</button>
-            </form>
-        <?php endif; ?>
-
-        <!-- Second Step: New password form (if email exists) -->
-        <?php if ($showNewPasswordForm): ?>
-            <form method="POST" class="space-y-4">
-                <input type="hidden" name="email" value="<?php echo $emailToUpdate; ?>">
-
-                <div>
-                    <input type="password" name="new_password" placeholder="Enter new password" required class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div>
-                    <input type="password" name="confirm_password" placeholder="Confirm new password" required class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <button type="submit" class="w-full text-white py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" style="background-color:var(--maroon)">Update Password</button>
-            </form>
-        <?php endif; ?>
+        <!-- Email verification form -->
+        <form method="POST" class="space-y-4">
+            <div>
+                <input type="email" name="email" placeholder="Enter your email" required class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <button type="submit" class="w-full text-white py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" style="background-color: var(--maroon)">Send New Password</button>
+        </form>
 
         <!-- Back to Login Link -->
         <p class="mt-4 text-center text-gray-600"><a href="login.php" style="color: var(--yellow)" class="hover:underline">Back to Login</a></p>

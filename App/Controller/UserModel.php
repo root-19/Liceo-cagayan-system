@@ -11,7 +11,7 @@ class UserModel {
     public function register($name, $middle_initial, $gender,  $school_id, $surname, $date_of_birth, $grade, $section, $strand, $phone_number, $email, $password, $role) {
         
         // Validate if email ends with '@edu.ph'
-    if (!str_ends_with($email, '@edu.ph')) {
+    if (!str_ends_with($email, '@liceo.edu.ph')) {
         return false; // Fail registration if email is invalid
     }
 
@@ -38,7 +38,7 @@ class UserModel {
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':middle_initial', $middle_initial);
     $stmt->bindParam(':gender', $gender);
-    $stmt->bindParam(':school_id', $school_id);  // Ensure this matches
+    $stmt->bindParam(':school_id', $school_id);  
     $stmt->bindParam(':surname', $surname);
     $stmt->bindParam(':date_of_birth', $date_of_birth);
     $stmt->bindParam(':grade', $grade);
@@ -129,7 +129,7 @@ class UserModel {
     // Check if email exists in the users table
     public function checkEmailExists($email) {
 
-        if (!preg_match('/@edu\.ph$/', $email)) {
+        if (!preg_match('/@liceo.edu\.ph$/', $email)) {
             return false;
         }
 
@@ -141,15 +141,12 @@ class UserModel {
         return $stmt->rowCount() > 0;
     }
 
-    // update the password sana all INA UPDATE
-    public function updatePassword($email, $new_password) {
-        $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
-        $query = "UPDATE " . $this->accounts . " SET password = :password WHERE email = :email";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':password', $hashedPassword);
-        $stmt->bindParam(':email', $email);
-
-        return $stmt->execute();
+    //update the password sana all INA UPDATE
+    public function updatePassword($email, $hashed_password) {
+        $stmt = $this->conn->prepare("UPDATE users SET password = ? WHERE email = ?");
+        $stmt->bindParam(1, $hashed_password, PDO::PARAM_STR);
+        $stmt->bindParam(2, $email, PDO::PARAM_STR);
+        return $stmt->execute(); // Returns true if update is successful
     }
 }
     
