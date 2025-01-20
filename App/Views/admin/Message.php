@@ -47,10 +47,12 @@ $messages = $user_id ? $messageController->fetchMessages($user_id) : [];
             </div>
 
             <div id="messages" class="p-4 h-96 overflow-y-scroll mb-4">
-                <?php foreach ($messages as $message): ?>
-                    <div class="message p-2 my-2 rounded-lg <?= $message['sender'] === 'admin' ? 'bg-orange-900 text-white' : 'bg-gray-200 text-black' ?>">
-                        <p><?= htmlspecialchars($message['message']) ?></p>
-                    </div>
+                <?php foreach ($messages as $message): ?> 
+                    <div class="message p-3 my-2 rounded-2xl max-w-md shadow-lg 
+    <?= $message['sender'] === 'admin' ? 'bg-orange-900 text-white ml-auto' : 'bg-gray-200 text-black mr-auto' ?>">
+    <?= htmlspecialchars($message['message'], ENT_QUOTES, 'UTF-8') ?>
+</div>
+
                 <?php endforeach; ?>
             </div>
 

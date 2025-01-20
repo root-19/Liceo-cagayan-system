@@ -15,7 +15,7 @@
     <div class="p-4 flex items-center justify-between">
       <!-- Logo -->
       <div class="flex flex-col items-center">
-      <img src="../../../Storage/image/background.jpg" alt="Logo" class="logo">
+      <img src="../../../Storage/image/logo.png" alt="Logo" class="logo">
   <h2 class="text-lg font-bold mt-2 ml-5">Liceo de Cagayan University</h2>
 </div>
 
@@ -75,7 +75,7 @@
       text: "You are about to log out.",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
+      confirmButtonColor: '#991b1b',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, log out!'
     }).then((result) => {

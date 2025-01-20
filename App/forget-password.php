@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
 
         // Hash the new password
         $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
+        error_log($new_password);
 
         // Update password in the database
         if ($userModel->updatePassword($email, $hashed_password)) {

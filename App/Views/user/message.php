@@ -75,8 +75,8 @@ $messages = $messageController->fetchMessages($_SESSION['user_id']);
         <!-- Message container (scrollable) -->
         <div id="messages" class="flex-grow p-4 h-96 overflow-y-scroll">
             <?php foreach ($messages as $message): ?>
-                <div class="message p-2 my-2 rounded-lg <?= $message['sender'] === 'admin' ? 'bg-gray-200 text-black' : 'bg-amber-700 text-white' ?>">
-                    <p><?= htmlspecialchars($message['message']) ?></p>
+                <div class="message p-3 my-2 rounded-2xl max-w-md shadow-lg  <?= $message['sender'] === 'admin' ? 'bg-gray-200 text-black mr-auto ' : 'bg-amber-800 text-white ml-auto' ?>">
+                    <p><?= htmlspecialchars($message['message'], ENT_QUOTES, 'UTF-8') ?></p>
                     <?php if (isset($message['reply_message']) && $message['reply_message']): ?>
                         <div class="ml-4 text-sm text-gray-600 italic">
                             Reply: <?= htmlspecialchars($message['reply_message']) ?>

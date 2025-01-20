@@ -12,11 +12,11 @@
 <body class="flex min-h-screen bg-gray-100">
 
   <!-- Sidebar -->
-  <div id="sidebar" style="background-color: var(--maroon);" class="fixed inset-y-0 left-0 w-64 text-white transition-transform transform -translate-x-full md:translate-x-0 md:relative z-20">
+  <div id="sidebar" style="background-color: var(--maroon);" class="fixed  left-0 w-64 text-white transition-transform transform -translate-x-full md:translate-x-0 md:relative z-20">
     <div class="p-4 flex items-center justify-between">
       <!-- Logo -->
-      <div class="flex flex-col items-center">
-      <img src="../../../Storage/image/background.jpg" alt="Logo" class="logo">
+      <div class="flex flex-col items-center bg-none">
+      <img src="../../../Storage/image/logo.png" alt="Logo" class="logo  ">
   <h2 class="text-lg font-bold mt-2 ml-5">Liceo de Cagayan University</h2>
 </div>
 
