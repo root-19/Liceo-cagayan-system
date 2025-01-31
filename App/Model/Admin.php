@@ -33,3 +33,14 @@ class Admin {
         $this->notification->sendRequest($userId, $message);
     }
 }
+
+/**
+ * Admin class handles user management and notification functionality
+ * 
+ * This class provides methods to:
+ * - Retrieve all users with 'user' role from the database
+ * - Send document requests to users via notifications
+ * 
+ * @property PDO $db Database connection instance
+ * @property Notification $notification Notification handler instance
+ */

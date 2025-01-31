@@ -27,7 +27,7 @@
       </button>
     </div>
     <nav class="mt-6">
-    <!-- <a href="index.php" class="block px-4 py-2 text-gray-300  hover:text-white">Home</a> -->
+    <a href="index.php" class="block px-4 py-2 text-gray-300  hover:text-white">Home</a>
       <a href="documents.php" class="block px-4 py-2 text-gray-300  hover:text-white">Documents</a>
       <a href="notification.php" class="block px-4 py-2 text-gray-300 hover:text-white">Notification</a>
       <a href="profile.php" class="block px-4 py-2 text-gray-300  hover:text-white">Profile</a>
@@ -88,3 +88,20 @@
   </script>
 </body>
 </html>
+<!-- 
+/**
+ * User Sidebar Layout Component
+ * 
+ * This file contains the sidebar navigation layout for the user interface.
+ * Features:
+ * - Responsive sidebar with mobile toggle functionality
+ * - University logo and branding
+ * - Navigation links to key user sections (Home, Documents, Notifications, etc.)
+ * - Logout confirmation using SweetAlert
+ * - Mobile-friendly design with show/hide controls
+ * 
+ * Dependencies:
+ * - Tailwind CSS for styling
+ * - SweetAlert2 for dialog boxes
+ * - Custom style.css for additional styling
+ */ -->

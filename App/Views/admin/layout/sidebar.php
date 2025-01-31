@@ -33,7 +33,7 @@
       <a href="Message.php" class="block px-4 py-2 text-gray-300 hover:text-white">Message</a>
       <a href="profile.php" class="block px-4 py-2 text-gray-300  hover:text-white">Profile managament</a>
       <a href="create_request.php" class="block px-4 py-2 text-gray-300  hover:text-white">Request documents</a>
-      <!-- <a href="" class="block px-4 py-2 text-gray-300  hover:text-white">Notifications</a> -->
+      <a href="" class="block px-4 py-2 text-gray-300  hover:text-white">Notifications</a>
       <a href="documents.php" class="block px-4 py-2 text-gray-300  hover:text-white">Documents
       <a href="#" id="logout" class="block px-4 py-2 text-gray-300  hover:text-white">Logout</a>
     </nav>
