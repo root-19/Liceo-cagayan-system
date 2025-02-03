@@ -31,7 +31,7 @@
     <a href="index.php" class="block px-4 py-2 text-gray-300  hover:text-white">Home</a>
       <a href="Student.php" class="block px-4 py-2 text-gray-300  hover:text-white">Search student</a>
       <a href="Message.php" class="block px-4 py-2 text-gray-300 hover:text-white">Message</a>
-      <a href="profile.php" class="block px-4 py-2 text-gray-300  hover:text-white">Profile managament</a>
+      <a href="profile.php" class="block px-4 py-2 text-gray-300  hover:text-white">Profile management</a>
       <a href="create_request.php" class="block px-4 py-2 text-gray-300  hover:text-white">Request documents</a>
       <a href="" class="block px-4 py-2 text-gray-300  hover:text-white">Notifications</a>
       <a href="documents.php" class="block px-4 py-2 text-gray-300  hover:text-white">Documents

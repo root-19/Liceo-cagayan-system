@@ -96,8 +96,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
                     <input type="text" name="section" placeholder="Section" required class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <input type="text" name="strand" placeholder="Strand" required class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
+    <!-- <label for="strand" class="block text-gray-700 font-medium mb-2">Strand</label> -->
+    <select name="strand" id="strand" required class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="" disabled selected>Select Strand</option>
+        <option value="STEM">STEM (Science, Technology, Engineering, and Mathematics)</option>
+        <option value="ABM">ABM (Accountancy, Business, and Management)</option>
+        <option value="HUMSS">HUMSS (Humanities and Social Sciences)</option>
+        <option value="GAS">GAS (General Academic Strand)</option>
+        <option value="TVL">TVL (Technical-Vocational-Livelihood)</option>
+        <option value="Arts and Design">Arts and Design</option>
+        <option value="Sports">Sports</option>
+    </select>
+</div>
                 <div>
                     <input type="text" name="phone_number" placeholder="Phone Number" required class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>

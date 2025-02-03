@@ -15,7 +15,7 @@ if (!isset($_SESSION['user_id'])) {
 // Fetch user documents from the database
 try {
     $db = (new Database())->connect();
-    $stmt = $db->prepare("SELECT id, document_type, file_path, upload_date FROM user_documents WHERE user_id = ?");
+    $stmt = $db->prepare("SELECT id, document_type, file_path, upload_date, status FROM user_documents WHERE user_id = ?");
     $stmt->bindValue(1, $_SESSION['user_id'], PDO::PARAM_INT);
     $stmt->execute();
     $documents = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -77,20 +77,24 @@ try {
             <h2 class="text-2xl font-bold mb-4 text-center">Your Uploaded Documents</h2>
 
             <ul class="bg-white shadow rounded-lg divide-y divide-gray-200">
-                <?php if (!empty($documents)) : ?>
-                    <?php foreach ($documents as $doc) : ?>
-                        <li class="py-4 px-6 flex justify-between items-center">
-                            <div>
-                                <p class="text-gray-700 font-medium">Document Type: <?php echo htmlspecialchars($doc['document_type']); ?></p>
-                                <p class="text-sm text-gray-500">Uploaded on: <?php echo htmlspecialchars($doc['upload_date']); ?></p>
-                            </div>
-                            <!-- <a href="<?php echo htmlspecialchars($doc['file_path']); ?>" target="_blank" class="text-blue-500 hover:underline">Download</a> -->
-                        </li>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <li class="py-4 px-6 text-gray-500">No documents uploaded yet.</li>
-                <?php endif; ?>
-            </ul>
+    <?php if (!empty($documents)) : ?>
+        <?php foreach ($documents as $doc) : ?>
+            <li class="py-4 px-6 flex justify-between items-center">
+                <div>
+                    <p class="text-gray-700 font-medium">Document Type: <?php echo htmlspecialchars($doc['document_type']); ?></p>
+                    <p class="text-sm text-gray-500">Uploaded on: <?php echo htmlspecialchars($doc['upload_date']); ?></p>
+                    <p class="text-sm <?php echo ($doc['status'] == 'Approved') ? 'font-bold text-green-500' : 'font-bold text-yellow-500'; ?>">
+                        Status: <?php echo htmlspecialchars($doc['status']); ?>
+                    </p>
+                </div>
+                <a href="<?php echo htmlspecialchars($doc['file_path']); ?>" target="_blank" class="text-blue-500 hover:underline">Download</a>
+            </li>
+        <?php endforeach; ?>
+    <?php else : ?>
+        <li class="py-4 px-6 text-gray-500">No documents uploaded yet.</li>
+    <?php endif; ?>
+</ul>
+
         </div>
     </div>
 
