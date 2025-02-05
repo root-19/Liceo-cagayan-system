@@ -9,7 +9,7 @@ $userModel = new UpdateUser($db);
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /path/to/login.php");
+    // header("Location: /path/to/login.php");
     exit;
 }
 

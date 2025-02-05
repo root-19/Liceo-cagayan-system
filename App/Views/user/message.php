@@ -24,10 +24,10 @@ $messages = $messageController->fetchMessages($_SESSION['user_id']);
 <body class="bg-gray-100 h-screen flex flex-col md:flex-row">
 
     <!-- Left Sidebar: Admin Contacts -->
-    <div class="w-full md:w-1/4 bg-white shadow-md p-4 h-full overflow-y-auto">
+    <!-- <div class="w-full md:w-1/4 bg-white shadow-md p-4 h-full overflow-y-auto">
         <h2 class="text-lg font-bold">Admin Contacts</h2>
         <ul class="mt-4">
-            <!-- Example admin contacts -->
+        
             <li class="p-2 border-b">
                 <p class="font-semibold">John Doe</p>
                 <p class="text-sm text-gray-600">Phone: +123456789</p>
@@ -64,12 +64,12 @@ $messages = $messageController->fetchMessages($_SESSION['user_id']);
                 <p class="text-sm text-gray-600">Email: chris.martinez@example.com</p>
             </li>
         </ul>
-    </div>
+    </div> -->
 
     <!-- Right Chat Box (Messages) -->
     <div class="w-full md:w-3/4 bg-white shadow-md rounded-lg flex flex-col">
         <div class="p-4 border-b">
-            <h1 class="text-xl font-bold">Chat with Admin</h1>
+            <h1 class="text-xl font-bold">Chat with <?php echo htmlspecialchars($_SESSION['user_name']);?></h1>
         </div>
 
         <!-- Message container (scrollable) -->

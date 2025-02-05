@@ -7,7 +7,7 @@ class Middleware {
 
         // If a role is provided, check if the user matches the required role
         if ($role && (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== $role)) {
-            header("Location: ../public/login.php"); // Redirect if role doesn't match
+            header("Location: ../public/login.php"); 
             exit;
         }
     }
@@ -30,7 +30,7 @@ class Middleware {
 
     // Restrict access to admin pages for non-admin users
     public static function restrictAdminPage() {
-        session_start();
+        // session_start();
 
         // If user is logged in but doesn't have admin rights, restrict access
         if (isset($_SESSION['user_role']) && $_SESSION['user_role'] !== 'admin') {
